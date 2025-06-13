@@ -2,6 +2,7 @@ MAIN COMMANDS USED
 
 --> Install Node.jS and restart your computer
 --> If you are using Mac write python3 instead of python
+--> run the command . venv/bin/activate instead of venv/scripts/activate
 
 2. cd backend
 7. python -m pip install Django         
@@ -17,3 +18,4 @@ MAIN COMMANDS USED
 23. npm install @mui/x-charts
 25. npm i axios
 15. npm run dev
+
