@@ -28,7 +28,6 @@ class Sales(models.Model):
 
     
     region = models.ForeignKey(Region, on_delete=models.CASCADE)
-
     productname = models.ForeignKey(ProductName, on_delete=models.CASCADE)
     productcategory = models.ForeignKey(ProductCategory, on_delete=models.CASCADE)
     paymentmethod = models.ForeignKey(PaymentMethod, on_delete=models.CASCADE)

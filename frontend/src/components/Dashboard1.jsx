@@ -1,17 +1,20 @@
 import {React, useState, useEffect} from 'react'
 import AxiosInstance from './Axios'
 
-
+import MyPieChart from './charts/PieChart'
+import MyChartBox from './charts/ChartBox'
 import MyChartBox2 from './charts/ChartBox2';
 import MyLineChart from './charts/LineChart';
 import PublicIcon from '@mui/icons-material/Public';
+import StoreIcon from '@mui/icons-material/Store';
 
 const Dashboard1 = () => {
 
     const [myData, setMyData] = useState([])
+    const [myBranchData, setMyBranchData] = useState([])
     const [myRegionData, setMyRegionData] = useState([])
 
-    console.log("MyData", myRegionData)
+    console.log("MyData", myBranchData)
 
     const GetData = () => {
         AxiosInstance.get(`sales/`)
@@ -24,6 +27,12 @@ const Dashboard1 = () => {
         .then((res) => {
             setMyRegionData(res.data)
         } )
+
+        AxiosInstance.get(`branchdata/`)
+        .then((res) => {
+            setMyBranchData(res.data)
+        } )
+
 
 
     }
@@ -44,6 +53,13 @@ const Dashboard1 = () => {
     return(
 
         <div>
+            <MyChartBox
+                icon1 = {<StoreIcon/>}
+                title1 = {"Quantities per Region"}
+                chart1 = { <MyPieChart
+                               myData={myBranchData}
+                              />}
+            />
             
             <MyChartBox2
                  icon1 = {<PublicIcon/>}

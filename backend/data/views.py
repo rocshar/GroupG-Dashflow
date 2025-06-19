@@ -4,6 +4,7 @@ from .serializers import *
 from .models import * 
 from rest_framework.response import Response
 from django.db.models import Sum, F, Func, Value, FloatField, IntegerField, Case, When
+from django.db.models.functions import Cast
 
 
 class SalesViewset(viewsets.ViewSet): 
@@ -16,6 +17,26 @@ class SalesViewset(viewsets.ViewSet):
         serializer = self.serializer_class(queryset, many=True)
         return Response(serializer.data)
 
+class BranchDataViewset(viewsets.ViewSet):
+    permission_classes = [permissions.AllowAny]
+    queryset = Sales.objects.all()
+    serializer_class = BranchDataSerializer
+
+    def list(self, request):
+        total_sum = Sales.objects.aggregate(total_quantity=Sum('quantity'))
+        total_quantity_value = total_sum['total_quantity']
+
+        queryset = Sales.objects.values('region', 'region__name')\
+            .annotate(quantity=Sum('quantity'))\
+            .annotate(percentage=Func(
+            (Cast(F('quantity'), FloatField()) / total_quantity_value) * 100,
+                        Value(2),
+                        function='ROUND',
+                        output_field=FloatField()
+                    ))
+
+        serializer = self.serializer_class(queryset, many=True)
+        return Response(serializer.data)
 
 class RegionDataViewset(viewsets.ViewSet): 
     permission_classes = [permissions.AllowAny]

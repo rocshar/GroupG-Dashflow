@@ -7,6 +7,7 @@ from .views import *
 router = DefaultRouter()
 router.register('sales',SalesViewset, basename='sales')
 router.register('regiondata',RegionDataViewset, basename='regiondata')
+router.register('branchdata', BranchDataViewset, basename='branchdata')
 
 
 urlpatterns = router.urls
