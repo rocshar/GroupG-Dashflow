@@ -17,10 +17,10 @@ class SalesViewset(viewsets.ViewSet):
         serializer = self.serializer_class(queryset, many=True)
         return Response(serializer.data)
 
-class BranchDataViewset(viewsets.ViewSet):
+class TotalRegionDataViewset(viewsets.ViewSet):
     permission_classes = [permissions.AllowAny]
     queryset = Sales.objects.all()
-    serializer_class = BranchDataSerializer
+    serializer_class = TotalRegionDataSerializer
 
     def list(self, request):
         total_sum = Sales.objects.aggregate(total_quantity=Sum('quantity'))

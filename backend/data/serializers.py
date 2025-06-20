@@ -40,7 +40,7 @@ class RegionDataSerializer(serializers.Serializer):
     def get_month_name(self,obj):
         return calendar.month_name[obj['date__month']]
 
-class BranchDataSerializer(serializers.Serializer):
+class TotalRegionDataSerializer(serializers.Serializer):
     id = serializers.IntegerField(source='region')
     label = serializers.CharField(source='region__name')
     value = serializers.IntegerField(source='quantity')

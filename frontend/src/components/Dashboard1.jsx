@@ -11,10 +11,10 @@ import StoreIcon from '@mui/icons-material/Store';
 const Dashboard1 = () => {
 
     const [myData, setMyData] = useState([])
-    const [myBranchData, setMyBranchData] = useState([])
+    const [myTotalRegionData, setMyTotalRegionData] = useState([])
     const [myRegionData, setMyRegionData] = useState([])
 
-    console.log("MyData", myBranchData)
+    console.log("MyData", myTotalRegionData)
 
     const GetData = () => {
         AxiosInstance.get(`sales/`)
@@ -28,9 +28,9 @@ const Dashboard1 = () => {
             setMyRegionData(res.data)
         } )
 
-        AxiosInstance.get(`branchdata/`)
+        AxiosInstance.get(`totalregiondata/`)
         .then((res) => {
-            setMyBranchData(res.data)
+            setMyTotalRegionData(res.data)
         } )
 
 
@@ -57,7 +57,7 @@ const Dashboard1 = () => {
                 icon1 = {<StoreIcon/>}
                 title1 = {"Quantities per Region"}
                 chart1 = { <MyPieChart
-                               myData={myBranchData}
+                               myData={myTotalRegionData}
                               />}
             />
             
