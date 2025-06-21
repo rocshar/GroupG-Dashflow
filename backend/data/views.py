@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.views.debug import default_urlconf
 from rest_framework import viewsets, permissions
 from .serializers import * 
 from .models import * 
@@ -79,6 +80,42 @@ class PaymentMethodDataViewset(viewsets.ViewSet):
 
         queryset = Sales.objects.values('paymentmethod', 'paymentmethod__name') \
                 .annotate(quantity=Sum('quantity'))
+
+        serializer = self.serializer_class(queryset, many=True)
+        return Response(serializer.data)
+
+class ProductRegionViewset(viewsets.ViewSet):
+    permission_classes = [permissions.AllowAny]
+    queryset = Sales.objects.all()
+    serializer_class = ProductRegionDataSerializer
+
+    def list(self, request):
+
+        queryset = Sales.objects.values('productcategory__name') \
+                .annotate(quantityRegionNorthAmerica=Sum(
+            Case(
+                When(region__name="North America", then='quantity'),
+                default=0,
+                output_field=IntegerField()
+            )
+
+        )) \
+            .annotate(quantityRegionEurope=Sum(
+            Case(
+                When(region__name="Europe", then='quantity'),
+                default=0,
+                output_field=IntegerField()
+            )
+
+        )) \
+            .annotate(quantityRegionAsia=Sum(
+            Case(
+                When(region__name="Asia", then='quantity'),
+                default=0,
+                output_field=IntegerField()
+            )
+
+        ))\
 
         serializer = self.serializer_class(queryset, many=True)
         return Response(serializer.data)

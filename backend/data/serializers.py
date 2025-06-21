@@ -51,3 +51,10 @@ class PaymentMethodDataSerializer(serializers.Serializer):
     id = serializers.IntegerField(source='paymentmethod')
     label = serializers.CharField(source='paymentmethod__name')
     value = serializers.IntegerField(source='quantity')
+
+
+class ProductRegionDataSerializer(serializers.Serializer):
+   productcategory__name = serializers.CharField()
+   quantityRegionNorthAmerica = serializers.IntegerField()
+   quantityRegionEurope = serializers.IntegerField()
+   quantityRegionAsia = serializers.IntegerField()

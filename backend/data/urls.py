@@ -9,6 +9,7 @@ router.register('sales',SalesViewset, basename='sales')
 router.register('regiondata',RegionDataViewset, basename='regiondata')
 router.register('totalregiondata', TotalRegionDataViewset, basename='totalregiondata')
 router.register('paymentmethoddata', PaymentMethodDataViewset, basename='paymentmethoddata')
+router.register('productregiondata', ProductRegionViewset, basename='productregiondata')
 
 
 urlpatterns = router.urls
