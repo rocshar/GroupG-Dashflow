@@ -3,13 +3,13 @@ import { LineChart } from '@mui/x-charts/LineChart';
 
 
 
-export default function MyLineChart({ mydata, myxaxis, myseries, width = 700 }) {
+export default function MyLineChart({ mydata, myxaxis, myseries, width = 400, height = 250 }) {
   return (
     <LineChart
       dataset={mydata}
       xAxis={[{ dataKey: myxaxis, scaleType: 'point' }]}
       series={myseries}
-      height={300}
+      height={height}
       width={width}
     />
   );
