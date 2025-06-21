@@ -45,3 +45,9 @@ class TotalRegionDataSerializer(serializers.Serializer):
     label = serializers.CharField(source='region__name')
     value = serializers.IntegerField(source='quantity')
     percentage = serializers.DecimalField(max_digits=10, decimal_places=2)
+
+
+class PaymentMethodDataSerializer(serializers.Serializer):
+    id = serializers.IntegerField(source='paymentmethod')
+    label = serializers.CharField(source='paymentmethod__name')
+    value = serializers.IntegerField(source='quantity')

@@ -7,14 +7,18 @@ import MyChartBox2 from './charts/ChartBox2';
 import MyLineChart from './charts/LineChart';
 import PublicIcon from '@mui/icons-material/Public';
 import StoreIcon from '@mui/icons-material/Store';
+import MyDonutChart from './charts/DonutChart';
+import PaymentIcon from '@mui/icons-material/Payment';
+
 
 const Dashboard1 = () => {
 
     const [myData, setMyData] = useState([])
     const [myTotalRegionData, setMyTotalRegionData] = useState([])
     const [myRegionData, setMyRegionData] = useState([])
+    const [myPaymentMethodData, setMyPaymentMethodData] = useState([])
 
-    console.log("MyData", myTotalRegionData)
+    console.log("My Data", myPaymentMethodData)
 
     const GetData = () => {
         AxiosInstance.get(`sales/`)
@@ -31,6 +35,11 @@ const Dashboard1 = () => {
         AxiosInstance.get(`totalregiondata/`)
         .then((res) => {
             setMyTotalRegionData(res.data)
+        } )
+
+        AxiosInstance.get(`paymentmethoddata/`)
+        .then((res) => {
+            setMyPaymentMethodData(res.data)
         } )
 
 
@@ -58,6 +67,12 @@ const Dashboard1 = () => {
                 title1 = {"Quantities per Region"}
                 chart1 = { <MyPieChart
                                myData={myTotalRegionData}
+                              />}
+                icon2 = {<PaymentIcon/>}
+                title2 = {"Quantities per Payment Method"}
+                chart2 = { <MyDonutChart
+                    data = {myPaymentMethodData}
+                    centerlabel={myPaymentMethodData.reduce((sum, data) => sum + data.value, 0)}
                               />}
             />
             

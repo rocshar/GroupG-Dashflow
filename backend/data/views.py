@@ -69,3 +69,16 @@ class RegionDataViewset(viewsets.ViewSet):
         
         serializer = self.serializer_class(queryset, many=True)
         return Response(serializer.data)
+
+class PaymentMethodDataViewset(viewsets.ViewSet):
+    permission_classes = [permissions.AllowAny]
+    queryset = Sales.objects.all()
+    serializer_class = PaymentMethodDataSerializer
+
+    def list(self, request):
+
+        queryset = Sales.objects.values('paymentmethod', 'paymentmethod__name') \
+                .annotate(quantity=Sum('quantity'))
+
+        serializer = self.serializer_class(queryset, many=True)
+        return Response(serializer.data)
