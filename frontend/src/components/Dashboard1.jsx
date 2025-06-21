@@ -9,6 +9,8 @@ import PublicIcon from '@mui/icons-material/Public';
 import StoreIcon from '@mui/icons-material/Store';
 import MyDonutChart from './charts/DonutChart';
 import PaymentIcon from '@mui/icons-material/Payment';
+import MyStackedBarChart from "./charts/StackedBarChart.jsx";
+import CategoryIcon from '@mui/icons-material/Category';
 
 
 const Dashboard1 = () => {
@@ -17,8 +19,9 @@ const Dashboard1 = () => {
     const [myTotalRegionData, setMyTotalRegionData] = useState([])
     const [myRegionData, setMyRegionData] = useState([])
     const [myPaymentMethodData, setMyPaymentMethodData] = useState([])
+    const [MyProductRegionData, setMyProductRegionData] = useState([])
 
-    console.log("My Data", myPaymentMethodData)
+    console.log("My Data", MyProductRegionData)
 
     const GetData = () => {
         AxiosInstance.get(`sales/`)
@@ -42,7 +45,10 @@ const Dashboard1 = () => {
             setMyPaymentMethodData(res.data)
         } )
 
-
+        AxiosInstance.get(`productregiondata/`)
+        .then((res) => {
+            setMyProductRegionData(res.data)
+        } )
 
     }
 
@@ -50,14 +56,17 @@ const Dashboard1 = () => {
         GetData()
     }, [])
 
-    const myregionseries = 
+    const myseries =
         [
-          { dataKey: 'quantityNorthAmerica', label: 'North America'}, 
-          { dataKey: 'quantityEurope', label: 'Europe'}, 
-          { dataKey: 'quantityAsia', label: 'Asia'}, 
-        ]
-
-
+        { dataKey: 'quantityRegionNorthAmerica', label: 'North America', stack:"A" },
+        { dataKey: 'quantityRegionEurope', label: 'Europe', stack:"A"},
+        { dataKey: 'quantityRegionAsia', label: 'Asia', stack:"A"},
+     ]
+    const myregionseries = [
+  { dataKey: 'quantityNorthAmerica', label: 'North America' },
+  { dataKey: 'quantityEurope', label: 'Europe' },
+  { dataKey: 'quantityAsia', label: 'Asia' },
+]
 
     return(
 
@@ -74,17 +83,30 @@ const Dashboard1 = () => {
                     data = {myPaymentMethodData}
                     centerlabel={myPaymentMethodData.reduce((sum, data) => sum + data.value, 0)}
                               />}
+
             />
-            
+
             <MyChartBox2
-                 icon1 = {<PublicIcon/>}
-                 title1 = {"Quantities per Month per Region"}
-                 chart1={ <MyLineChart
-                              mydata = {myRegionData} 
-                              myxaxis = {"month_name"}
-                              myseries = {myregionseries}
-                             />}
-            />
+  icon1={<PublicIcon />}
+  title1={"Quantities per Month per Region"}
+  chart1={
+    <MyLineChart
+      mydata={myRegionData}
+      myxaxis={"month_name"}
+      myseries={myregionseries}
+      width={400} // Custom prop to reduce chart size
+    />
+  }
+  icon2={<CategoryIcon />}
+  title2={"Quantities per Product Category & Region"}
+  chart2={<MyStackedBarChart
+      dataset={MyProductRegionData}
+      XlabelName={'productcategory__name'}
+      series={myseries}
+    />
+  }
+/>
+
 
         </div>
     )
