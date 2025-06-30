@@ -19,3 +19,41 @@ MAIN COMMANDS USED
 25. npm i axios
 15. npm run dev
 
+What did you complete already?
+
+- setting up Django backend & react frontend
+- Establishing a connection between the backend and the frontend
+- Page navigation 
+- Datasets, SQLite
+- Data visualisation, charts
+
+Which tasks are work-in-progress?
+
+- User interface improvements
+- Design changes to make it look like the prototype.
+- Collapsible sidemen, light mode/dark mode
+
+Problems faced
+
+- version compatibility issues
+- Issues with git
+
+AGENDA
+
+1. dataset  -> Dua
+2. django backend -> Dua
+   react frontend -> Dua
+
+3. charts -> 2 slides -> Bhavya  & Tijana
+
+4. features to be added
+
+-> AI/NLP -> Bhavya
+-> UI/Design -> Xhesika
+
+5. problems - Rochit
+
+6. demo - Rochit
+
+
+

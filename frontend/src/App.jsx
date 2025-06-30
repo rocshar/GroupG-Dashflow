@@ -17,11 +17,12 @@ function App() {
      <Navbar
 
        content = {
-             
-            <Routes>
-              <Route path="" element={<Dashboard1/>}/>
-              <Route path="/dashboard2" element={<Dashboard2/>}/>
-            </Routes>
+
+           <Routes>
+               <Route path="" element={<Dashboard1/>}/>
+               <Route path="/dashboard1" element={<Dashboard1/>}/>
+               <Route path="/dashboard2" element={<Dashboard2/>}/>
+           </Routes>
             
       }
     />

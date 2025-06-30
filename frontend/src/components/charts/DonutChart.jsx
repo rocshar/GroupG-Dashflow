@@ -4,7 +4,7 @@ import { useDrawingArea } from '@mui/x-charts/hooks';
 import { styled } from '@mui/material/styles';
 
 const size = {
-  width: 200,
+  width: 350,
   height: 200,
 };
 

@@ -12,56 +12,102 @@ import ListItemText from '@mui/material/ListItemText';
 import AutoGraphIcon from '@mui/icons-material/AutoGraph';
 import { Link, useLocation} from 'react-router-dom';
 
-const drawerWidth = 240;
+
+import { createTheme, styled } from '@mui/material/styles';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import BarChartIcon from '@mui/icons-material/BarChart';
+import DescriptionIcon from '@mui/icons-material/Description';
+import LayersIcon from '@mui/icons-material/Layers';
+import { AppProvider } from '@toolpad/core/AppProvider';
+import { DashboardLayout } from '@toolpad/core/DashboardLayout';
+import { PageContainer } from '@toolpad/core/PageContainer';
+import Grid from '@mui/material/Grid';
+
+
+
+
+const NAVIGATION = [
+  {
+    kind: 'header',
+    title: 'Main items',
+  },
+  {
+    segment: 'dashboard1',
+    title: 'Dashboard',
+    icon: <DashboardIcon />,
+  },
+  {
+    segment: 'dashboard2',
+    title: 'Orders',
+    icon: <ShoppingCartIcon />,
+  },
+  {
+    kind: 'divider',
+  },
+  {
+    kind: 'header',
+    title: 'Analytics',
+  },
+  {
+    segment: 'reports',
+    title: 'Reports',
+    icon: <BarChartIcon />,
+    children: [
+      {
+        segment: 'sales',
+        title: 'Sales',
+        icon: <DescriptionIcon />,
+      },
+    ],
+  },
+
+];
+
+const demoTheme = createTheme({
+  colorSchemes: { light: true, dark: true },
+  cssVariables: {
+    colorSchemeSelector: 'class',
+  },
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 600,
+      md: 600,
+      lg: 1200,
+      xl: 1536,
+    },
+  },
+});
+
+
+const Skeleton = styled('div')(({ theme, height }) => ({
+  backgroundColor: theme.palette.action.hover,
+  borderRadius: theme.shape.borderRadius,
+  height,
+  content: '" "',
+}));
+
+
 
 export default function Navbar({content}) {
-  const location = useLocation()
+
+
 
   return (
-    <Box sx={{ display: 'flex' }}>
-      <CssBaseline />
-      <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
-        <Toolbar>
-          <Typography variant="h6" noWrap component="div">
-            Clipped drawer
-          </Typography>
-        </Toolbar>
-      </AppBar>
-      <Drawer
-        variant="permanent"
-        sx={{
-          width: drawerWidth,
-          flexShrink: 0,
-          [`& .MuiDrawer-paper`]: { width: drawerWidth, boxSizing: 'border-box' },
-        }}
-      >
-        <Toolbar />
-        <Box sx={{ overflow: 'auto' }}>
-          
-            <ListItem key={1} disablePadding>
-            <ListItemButton component={Link} to={"/"} selected={"/" === location.pathname}>
-                <ListItemIcon>
-                        <AutoGraphIcon />
-                </ListItemIcon>
-                <ListItemText primary={"Dashboard 1"} />
-            </ListItemButton>
-            </ListItem>
-
-            <ListItem key={2} disablePadding>
-            <ListItemButton component={Link} to={"/dashboard2"} selected={"/dashboard2" === location.pathname}>
-                <ListItemIcon>
-                        <AutoGraphIcon />
-                </ListItemIcon>
-                <ListItemText primary={"Dashboard 2"} />
-            </ListItemButton>
-            </ListItem>
-
-        </Box>
-      </Drawer>
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-        <Toolbar />
-                {content}
-      </Box>
-    </Box>
+   <AppProvider
+      navigation={NAVIGATION}
+      theme={demoTheme}
+      branding={{
+        logo: <img src="src/assets/colored-logo.png"/>,
+        title: '',
+      }}
+    >
+      <DashboardLayout >
+        <PageContainer>
+          {content}
+        </PageContainer>
+      </DashboardLayout>
+    </AppProvider>
   );
 }
